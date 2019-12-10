@@ -1,5 +1,6 @@
 use std::env;
 use gumdrop::Options;
+use chrono::{DateTime, Local};
 
 #[derive(Debug, Options)]
 struct KitOptions {
@@ -29,10 +30,13 @@ fn main() {
         Err(_e) => "lthevenoux".to_string(),
     };
 
+    let now: DateTime<Local> = Local::now();
+    let date = now.format("%Y%m%d%H%M");
+
     let branch_dest = match opts.branch_destination {
         None => "csw_coolidge".to_string(),
         Some(b) => b
     };
 
-    println!("{}/{}/{}", branch_type, user, branch_dest);
+    println!("{}/{}.{}/{}", branch_type, user, date, branch_dest);
 }
